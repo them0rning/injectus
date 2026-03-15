@@ -1,0 +1,9 @@
+Package: com.yourname.camspoof
+Name: CamSpoof
+Depends: mobilesubstrate (>= 0.9.7000), preferenceloader
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Replace camera output with any photo
+Maintainer: YourName <you@example.com>
+Author: YourName
+Section: Tweaks
