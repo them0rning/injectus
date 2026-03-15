@@ -1,0 +1,35 @@
+name: Build CamSpoof
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Theos
+        uses: Randomblock1/theos-action@v1
+        with:
+          theos-dir: /home/runner/theos
+
+      - name: Build .deb
+        run: |
+          export THEOS=/home/runner/theos
+          export THEOS_MAKE_PATH=$THEOS/makefiles
+          export PATH="$THEOS/bin:$PATH"
+          make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+
+      - name: Upload .deb
+        uses: actions/upload-artifact@v4
+        with:
+          name: CamSpoof-deb
+          path: packages/*.deb
+          if-no-files-found: error
